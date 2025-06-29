@@ -31,7 +31,12 @@ This project allows you to control a physical light switch using:
 
 ## Getting Started
 
-### Prerequisites
+### Choose Your Development Environment
+
+1. **For PlatformIO users** → Continue with Prerequisites below
+2. **For Arduino IDE users** → Jump to [Arduino IDE Setup](#arduino-ide-setup)
+
+### Prerequisites (PlatformIO)
 
 1. **Install PlatformIO**
    - [VS Code](https://code.visualstudio.com/) + [PlatformIO extension](https://platformio.org/install/ide?install=vscode)
@@ -57,7 +62,7 @@ This project allows you to control a physical light switch using:
    monitor_port = COM3   ; Your ESP32 port
    ```
 
-### Flashing to ESP32
+### Flashing to ESP32 (PlatformIO)
 
 #### Method 1: Using VS Code + PlatformIO
 
@@ -148,16 +153,34 @@ Web server started!
 === Setup Complete ===
 ```
 
+## Development Options
+
+This project supports **two development environments**:
+
+### Option 1: PlatformIO (Recommended)
+- **File**: `src/main.cpp`
+- **Config**: `platformio.ini`
+- **Benefits**: Professional IDE, better debugging, dependency management
+- **Best for**: Advanced users, production projects
+
+### Option 2: Arduino IDE
+- **File**: `espLightSwitchLogic.ino`
+- **Config**: Libraries installed through Arduino IDE
+- **Benefits**: Simple setup, beginner-friendly
+- **Best for**: Learning, quick prototypes, Arduino users
+
+Both versions contain the same functionality - choose based on your preference!
+
 ## Project Structure
 
 ```
 esp32_lightSwitch/
 ├── platformio.ini          # PlatformIO configuration
 ├── src/
-│   └── main.cpp            # Main application code
+│   └── main.cpp            # PlatformIO version (enhanced)
+├── espLightSwitchLogic.ino # Arduino IDE version (original)
 ├── LightSwitch_v1.stl      # 3D printable mount
-├── README.md               # This file
-└── espLightSwitchLogic.ino # Original Arduino IDE file (deprecated)
+└── README.md               # This file
 ```
 
 
@@ -183,3 +206,83 @@ This is an ongoing project. Contributions, suggestions, and improvements are wel
 ---
 
 **Note:** This project is still under development. Some features may be incomplete or require additional testing.
+
+## Arduino IDE Setup
+
+### Prerequisites (Arduino IDE)
+
+1. **Install Arduino IDE**
+   - Download from [Arduino.cc](https://www.arduino.cc/en/software)
+   - Install version 2.0 or later
+
+2. **Install ESP32 Board Package**
+   - Open Arduino IDE
+   - Go to File → Preferences
+   - Add this URL to "Additional Board Manager URLs":
+     ```
+     https://espressif.github.io/arduino-esp32/package_esp32_index.json
+     ```
+   - Go to Tools → Board → Boards Manager
+   - Search for "ESP32" and install "esp32 by Espressif Systems"
+
+3. **Install Required Libraries**
+   - Go to Tools → Manage Libraries
+   - Install these libraries:
+     - `ESP32Servo` by Kevin Harrington
+     - `WiFi` (usually pre-installed)
+     - `WebServer` (usually pre-installed)
+
+### Configuration (Arduino IDE)
+
+1. **WiFi Setup**
+   - Open `espLightSwitchLogic.ino`
+   - Update lines 5-6:
+   ```cpp
+   const char* ssid = "YOUR_WIFI_SSID";
+   const char* password = "YOUR_WIFI_PASSWORD";
+   ```
+
+2. **Board Configuration**
+   - Go to Tools → Board → ESP32 Arduino → ESP32 Dev Module
+   - Set Tools → Port → (your COM port)
+   - Set Tools → Upload Speed → 921600
+
+### Flashing to ESP32 (Arduino IDE)
+
+1. **Open Project**
+   - Open `espLightSwitchLogic.ino` in Arduino IDE
+
+2. **Verify/Compile**
+   - Click the ✓ (Verify) button
+   - Fix any compilation errors
+
+3. **Upload to ESP32**
+   - Connect ESP32 via USB
+   - Hold BOOT button (if required by your board)
+   - Click the → (Upload) button
+   - Wait for "Done uploading" message
+
+4. **Monitor Serial Output**
+   - Go to Tools → Serial Monitor
+   - Set baud rate to 115200
+   - Reset ESP32 to see boot messages
+
+## Arduino IDE vs PlatformIO Comparison
+
+| Feature | Arduino IDE | PlatformIO |
+|---------|-------------|------------|
+| **Setup Difficulty** | Easy | Moderate |
+| **IDE Quality** | Basic | Advanced |
+| **Library Management** | Manual | Automatic |
+| **Debugging** | Serial only | Full debugging |
+| **Build System** | Simple | Powerful |
+| **Code Completion** | Basic | Excellent |
+| **Version Control** | Manual | Integrated |
+| **Multi-platform** | Yes | Yes |
+| **File Structure** | Single .ino | Organized folders |
+| **Professional Use** | Hobbyist | Professional |
+
+**Recommendation:**
+- **New to ESP32?** Start with Arduino IDE
+- **Experienced developer?** Use PlatformIO
+- **Team project?** Use PlatformIO for better collaboration
